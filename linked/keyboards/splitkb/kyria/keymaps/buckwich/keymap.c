@@ -13,9 +13,49 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include QMK_KEYBOARD_H
 
-enum layers { _BASE = 0, _NAV, _SYM, _FUNCTION, _ADJUST };
+enum layers
+{
+  _BASE = 0,
+  _NAV,
+  _SYM,
+  _FUNCTION,
+  _ADJUST
+};
+
+enum custom_keycodes
+{
+  TD_TAB_ESC = SAFE_RANGE,
+  TD_CP_PST,
+  TDC_A,
+  TDC_B,
+  TDC_C,
+  TDC_D,
+  TDC_E,
+  TDC_F,
+  TDC_G,
+  TDC_H,
+  TDC_I,
+  TDC_J,
+  TDC_K,
+  TDC_L,
+  TDC_M,
+  TDC_N,
+  TDC_O,
+  TDC_P,
+  TDC_Q,
+  TDC_R,
+  TDC_S,
+  TDC_T,
+  TDC_U,
+  TDC_V,
+  TDC_W,
+  TDC_X,
+  TDC_Y,
+  TDC_Z
+};
 
 // Aliases for readability
 
@@ -24,35 +64,38 @@ enum layers { _BASE = 0, _NAV, _SYM, _FUNCTION, _ADJUST };
 #define FKEYS MO(_FUNCTION)
 #define ADJUST MO(_ADJUST)
 
-#define CTL_ESC MT(MOD_LCTL, KC_ESC)
+#define CTL_BSP MT(MOD_LCTL, KC_BSPC)
 #define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-#define CTL_MINS MT(MOD_RCTL, KC_MINUS)
-#define ALT_ENT MT(MOD_LALT, KC_ENT)
 
 // Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
 // The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
 // produces the key `tap` when tapped (i.e. pressed and released).
 
 // clang-format off
-#define LAYOUT_via( \
-    L00, L01, L02, L03, L04, L05, LE0, LE1, RE0, RE1, R06, R07, R08, R09, R10, R11, \
-    L12, L13, L14, L15, L16, L17,                     R18, R19, R20, R21, R22, R23, \
-    L24, L25, L26, L27, L28, L29, L30, L31, R32, R33, R34, R35, R36, R37, R38, R39, \
-                   L40, L41, L42, L43, L44, R45, R46, R47, R48, R49 \
-) \
-{ \
-    { LE0,   LE1,   L05,   L04,   L03,   L02,   L01,   L00   }, \
-    { RE0,   RE1,   L17,   L16,   L15,   L14,   L13,   L12   }, \
-    { L31,   L30,   L29,   L28,   L27,   L26,   L25,   L24   }, \
-    { L44,   L43,   L42,   L41,   L40,   KC_NO, KC_NO, KC_NO }, \
-    { KC_NO, KC_NO, R06,   R07,   R08,   R09,   R10,   R11   }, \
-    { KC_NO, KC_NO, R18,   R19,   R20,   R21,   R22,   R23   }, \
-    { R32,   R33,   R34,   R35,   R36,   R37,   R38,   R39   }, \
-    { R45,   R46,   R47,   R48,   R49,   KC_NO, KC_NO, KC_NO }, \
-}
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
+ * Base Layer: COLMAK
+ *
+ * ,-------------------------------------------.                              ,-------------------------------------------.
+ * |Tab/Esc |   Q  |   W  |   F  |   P  |   B  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
+ * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
+ * |Ctrl/Bsp|   A  |   R  |   S  |   T  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
+ * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
+ * | LShift |   Z  |   X  |   C  |   D  |   V  | [ {  |CapsLk|  |F-keys|  ] } |   N  |   M  | ,  < | . >  | /  ? | RShift |
+ * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
+ *                        |Adjust| LGUI | LAlt/| Space| Nav  |  | Sym  | Space| AltGr| RGUI | Menu |
+ *                        |      |      | Enter|      |      |  |      |      |      |      |      |
+ *                        `----------------------------------'  `----------------------------------'
+ */
+    [_BASE] = LAYOUT(
+     TD_TAB_ESC ,TDC_Q ,  TDC_W   ,  TDC_F  ,   TDC_P ,   TDC_B , TDC_J   , TDC_L   ,  TDC_U  ,   TDC_Y ,KC_SCLN, KC_BSPC,
+     CTL_BSP , TDC_A ,  TDC_R   ,  TDC_S  ,   TDC_T ,   TDC_G ,                                     TDC_M   , TDC_N   ,  TDC_E  ,   TDC_I , TDC_O  , CTL_QUOT,
+     KC_LSFT , TDC_Z ,  TDC_X   ,  TDC_C  ,   TDC_D ,   TDC_V , _______, TD_CP_PST, _______, _______, TDC_K   , TDC_H   , KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
+                                _______, _______, KC_SPC , _______, _______, _______, _______, _______, KC_UP  , KC_DOWN
+    ), 
+    /*
  * Base Layer: QWERTY
  *
  * ,-------------------------------------------.                              ,-------------------------------------------.
@@ -66,12 +109,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      | Enter|      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_BASE] = LAYOUT_via(
-     KC_TAB  , KC_Q ,  KC_W   ,  KC_E  ,   KC_R ,   KC_T ,  KC_VOLD, KC_VOLU,   KC_PGDN, KC_PGUP, KC_Y,   KC_U ,  KC_I ,   KC_O ,  KC_P , KC_BSPC,
-     CTL_ESC , KC_A ,  KC_S   ,  KC_D  ,   KC_F ,   KC_G ,                                        KC_H,   KC_J ,  KC_K ,   KC_L ,KC_SCLN,CTL_QUOT,
-     KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_V ,   KC_B , KC_LBRC,KC_CAPS,     FKEYS  , KC_RBRC, KC_N,   KC_M ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
-                                ADJUST , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,     SYM    , KC_SPC ,KC_RALT, KC_RGUI, KC_APP
-    ),
+    // [_BASE] = LAYOUT(
+    //  KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,  KC_VOLD, KC_VOLU,   KC_PGDN, KC_PGUP, KC_J,   KC_L ,  KC_U ,   KC_Y ,  KC_SCLN , KC_BSPC,
+    //  CTL_ESC , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M,   KC_N ,  KC_E ,   KC_I , KC_O, CTL_QUOT,
+    //  KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LBRC,KC_CAPS,     FKEYS  , KC_RBRC, KC_K,   KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
+    //                             ADJUST , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,     SYM    , KC_SPC ,KC_RALT, KC_RGUI, KC_APP
+    // ),
+
 
 /*
  * Nav Layer: Media, navigation
@@ -87,8 +131,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_NAV] = LAYOUT_via(
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
+    [_NAV] = LAYOUT(
+      _______, _______, _______, _______, _______,  _______, KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
       _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_INS,
       _______, _______, _______, _______, _______, _______, _______, KC_SLCK, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -108,8 +152,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_SYM] = LAYOUT_via(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 , _______, _______, _______, _______, KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
+    [_SYM] = LAYOUT(
+      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 , KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
      KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
      KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_NUBS, KC_LBRC, _______, _______, KC_RBRC, KC_NUHS, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -129,8 +173,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_FUNCTION] = LAYOUT_via(
-      _______,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+    [_FUNCTION] = LAYOUT(
+      _______,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, _______, _______, _______,
       _______,  KC_F5 ,  KC_F6 ,  KC_F7 ,  KC_F8 , _______,                                     _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI, _______,
       _______,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -150,8 +194,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                        |      |      |      |      |      |  |      |      |      |      |      |
  *                        `----------------------------------'  `----------------------------------'
  */
-    [_ADJUST] = LAYOUT_via(
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
+    [_ADJUST] = LAYOUT(
+      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
       _______, _______, _______, _______, _______, _______,                                     RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -161,88 +205,543 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-#ifdef ENCODER_ENABLE
-static uint8_t  encoder_state[2] = {0};
-static keypos_t encoder_ccw[2]   = {{0, 0}, {0, 1}};
-static keypos_t encoder_cw[2]    = {{1, 0}, {1, 1}};
+uint16_t td_tab_esc_timer;
+uint16_t td_cp_pst_timer;
+uint16_t tdc_a_timer;
+uint16_t tdc_b_timer;
+uint16_t tdc_c_timer;
+uint16_t tdc_d_timer;
+uint16_t tdc_e_timer;
+uint16_t tdc_f_timer;
+uint16_t tdc_g_timer;
+uint16_t tdc_h_timer;
+uint16_t tdc_i_timer;
+uint16_t tdc_j_timer;
+uint16_t tdc_k_timer;
+uint16_t tdc_l_timer;
+uint16_t tdc_m_timer;
+uint16_t tdc_n_timer;
+uint16_t tdc_o_timer;
+uint16_t tdc_p_timer;
+uint16_t tdc_q_timer;
+uint16_t tdc_r_timer;
+uint16_t tdc_s_timer;
+uint16_t tdc_t_timer;
+uint16_t tdc_u_timer;
+uint16_t tdc_v_timer;
+uint16_t tdc_w_timer;
+uint16_t tdc_x_timer;
+uint16_t tdc_y_timer;
+uint16_t tdc_z_timer;
 
-void encoder_action_unregister(void) {
-    for (int index = 0; index < 2; ++index) {
-        if (encoder_state[index]) {
-            keyevent_t encoder_event = (keyevent_t){.key = encoder_state[index] >> 1 ? encoder_cw[index] : encoder_ccw[index], .pressed = false, .time = (timer_read() | 1)};
-            encoder_state[index]     = 0;
-            action_exec(encoder_event);
-        }
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+  switch (keycode)
+  {
+
+  case TD_TAB_ESC: // One key copy/paste
+    if (record->event.pressed)
+    {
+      td_tab_esc_timer = timer_read();
     }
-}
-
-void encoder_action_register(uint8_t index, bool clockwise) {
-    keyevent_t encoder_event = (keyevent_t){.key = clockwise ? encoder_cw[index] : encoder_ccw[index], .pressed = true, .time = (timer_read() | 1)};
-    encoder_state[index]     = (clockwise ^ 1) | (clockwise << 1);
-    action_exec(encoder_event);
-}
-
-void matrix_scan_user(void) { encoder_action_unregister(); }
-
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    encoder_action_register(index, clockwise);
-    return false;
-};
-#endif
-
-#ifdef OLED_ENABLE
-void oled_task_user(void) {
-    if (is_keyboard_master()) {
-        // QMK Logo and version information
-        // clang-format off
-        static const char PROGMEM qmk_logo[] = {
-            0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
-            0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
-            0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
-        // clang-format on
-
-        oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria rev1.0 w/ VIA\n\n"), false);
-
-        // Host Keyboard Layer Status
-        oled_write_P(PSTR("Layer: "), false);
-        switch (get_highest_layer(layer_state | default_layer_state)) {
-            case 0:
-                oled_write_P(PSTR("Base\n"), false);
-                break;
-            case 1:
-                oled_write_P(PSTR("Nav\n"), false);
-                break;
-            case 2:
-                oled_write_P(PSTR("Sym\n"), false);
-                break;
-            case 3:
-                oled_write_P(PSTR("Function\n"), false);
-                break;
-            case 4:
-                oled_write_P(PSTR("Adjust\n"), false);
-                break;
-        }
-
-        // Host Keyboard LED Status
-        led_t led_usb_state = host_keyboard_led_state();
-        oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
-    } else {
-        // clang-format off
-        static const char PROGMEM kyria_logo[] = {
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  0,  0,192,224,240,124, 62, 31, 15,  7,  3,  1,128,192,224,240,120, 56, 60, 28, 30, 14, 14,  7,  7,135,231,127, 31,255,255, 31,127,231,135,  7,  7, 14, 14, 30, 28, 60, 56,120,240,224,192,128,  1,  3,  7, 15, 31, 62,124,240,224,192,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,240,252,255, 31,  7,  1,  0,  0,192,240,252,254,255,247,243,177,176, 48, 48, 48, 48, 48, 48, 48,120,254,135,  1,  0,  0,255,255,  0,  0,  1,135,254,120, 48, 48, 48, 48, 48, 48, 48,176,177,243,247,255,254,252,240,192,  0,  0,  1,  7, 31,255,252,240,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,255,255,255,  0,  0,  0,  0,  0,254,255,255,  1,  1,  7, 30,120,225,129,131,131,134,134,140,140,152,152,177,183,254,248,224,255,255,224,248,254,183,177,152,152,140,140,134,134,131,131,129,225,120, 30,  7,  1,  1,255,255,254,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0,255,255,  0,  0,192,192, 48, 48,  0,  0,240,240,  0,  0,  0,  0,  0,  0,240,240,  0,  0,240,240,192,192, 48, 48, 48, 48,192,192,  0,  0, 48, 48,243,243,  0,  0,  0,  0,  0,  0, 48, 48, 48, 48, 48, 48,192,192,  0,  0,  0,  0,  0,
-            0,  0,  0,255,255,255,  0,  0,  0,  0,  0,127,255,255,128,128,224,120, 30,135,129,193,193, 97, 97, 49, 49, 25, 25,141,237,127, 31,  7,255,255,  7, 31,127,237,141, 25, 25, 49, 49, 97, 97,193,193,129,135, 30,120,224,128,128,255,255,127,  0,  0,  0,  0,  0,255,255,255,  0,  0,  0,  0, 63, 63,  3,  3, 12, 12, 48, 48,  0,  0,  0,  0, 51, 51, 51, 51, 51, 51, 15, 15,  0,  0, 63, 63,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 48, 48, 63, 63, 48, 48,  0,  0, 12, 12, 51, 51, 51, 51, 51, 51, 63, 63,  0,  0,  0,  0,  0,
-            0,  0,  0,  0, 15, 63,255,248,224,128,  0,  0,  3, 15, 63,127,255,239,207,141, 13, 12, 12, 12, 12, 12, 12, 12, 30,127,225,128,  0,  0,255,255,  0,  0,128,225,127, 30, 12, 12, 12, 12, 12, 12, 12, 13,141,207,239,255,127, 63, 15,  3,  0,  0,128,224,248,255, 63, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  0,  0,  3,  7, 15, 62,124,248,240,224,192,128,  1,  3,  7, 15, 30, 28, 60, 56,120,112,112,224,224,225,231,254,248,255,255,248,254,231,225,224,224,112,112,120, 56, 60, 28, 30, 15,  7,  3,  1,128,192,224,240,248,124, 62, 15,  7,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  3,  7, 15, 14, 30, 28, 60, 56,120,112,112,112,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,112,112,112,120, 56, 60, 28, 30, 14, 15,  7,  3,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-        };
-        // clang-format on
-        oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
+    else
+    {
+      if (timer_elapsed(td_tab_esc_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_V));
+      }
+      else
+      { // Tap, paste
+        tap_code16(C(KC_V));
+      }
     }
+    break;
+
+  case TD_CP_PST: // One key copy/paste
+    if (record->event.pressed)
+    {
+      td_cp_pst_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(td_cp_pst_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(KC_ESC);
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_TAB);
+      }
+    }
+    break;
+
+  case TDC_A: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_a_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_a_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_A));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_A);
+      }
+    }
+    break;
+
+  case TDC_B: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_b_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_b_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_B));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_B);
+      }
+    }
+    break;
+
+  case TDC_C: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_c_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_c_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_C));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_C);
+      }
+    }
+    break;
+
+  case TDC_D: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_d_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_d_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_D));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_D);
+      }
+    }
+    break;
+
+  case TDC_E: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_e_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_e_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_E));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_E);
+      }
+    }
+    break;
+
+  case TDC_F: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_f_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_f_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_F));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_F);
+      }
+    }
+    break;
+
+  case TDC_G: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_g_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_g_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_G));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_G);
+      }
+    }
+    break;
+
+  case TDC_H: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_h_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_h_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_H));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_H);
+      }
+    }
+    break;
+
+  case TDC_I: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_i_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_i_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_I));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_I);
+      }
+    }
+    break;
+
+  case TDC_J: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_j_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_j_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_J));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_J);
+      }
+    }
+    break;
+
+  case TDC_K: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_k_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_k_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_K));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_K);
+      }
+    }
+    break;
+
+  case TDC_L: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_l_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_l_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_L));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_L);
+      }
+    }
+    break;
+
+  case TDC_M: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_m_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_m_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_M));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_M);
+      }
+    }
+    break;
+
+  case TDC_N: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_n_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_n_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_N));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_N);
+      }
+    }
+    break;
+
+  case TDC_O: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_o_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_o_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_O));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_O);
+      }
+    }
+    break;
+
+  case TDC_P: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_p_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_p_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_P));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_P);
+      }
+    }
+    break;
+
+  case TDC_Q: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_q_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_q_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_Q));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_Q);
+      }
+    }
+    break;
+
+  case TDC_R: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_r_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_r_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_R));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_R);
+      }
+    }
+    break;
+
+  case TDC_S: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_s_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_s_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_S));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_S);
+      }
+    }
+    break;
+
+  case TDC_T: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_t_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_t_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_T));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_T);
+      }
+    }
+    break;
+
+  case TDC_U: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_u_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_u_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_U));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_U);
+      }
+    }
+    break;
+
+  case TDC_V: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_v_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_v_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_V));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_V);
+      }
+    }
+    break;
+
+  case TDC_W: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_w_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_w_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_W));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_W);
+      }
+    }
+    break;
+
+  case TDC_X: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_x_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_x_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_X));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_X);
+      }
+    }
+    break;
+
+  case TDC_Y: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_y_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_y_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_Y));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_Y);
+      }
+    }
+    break;
+
+  case TDC_Z: // One key copy/paste
+    if (record->event.pressed)
+    {
+      tdc_z_timer = timer_read();
+    }
+    else
+    {
+      if (timer_elapsed(tdc_z_timer) > TAPPING_TERM)
+      { // Hold, copy
+        tap_code16(C(KC_Z));
+      }
+      else
+      { // Tap, paste
+        tap_code16(KC_Z);
+      }
+    }
+    break;
+  }
+  return true;
 }
-#endif
