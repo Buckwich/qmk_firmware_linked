@@ -16,732 +16,257 @@
 
 #include QMK_KEYBOARD_H
 
-enum layers
-{
-  _BASE = 0,
-  _NAV,
-  _SYM,
-  _FUNCTION,
-  _ADJUST
-};
 
 enum custom_keycodes
 {
-  TD_TAB_ESC = SAFE_RANGE,
-  TD_CP_PST,
-  TDC_A,
-  TDC_B,
-  TDC_C,
-  TDC_D,
-  TDC_E,
-  TDC_F,
-  TDC_G,
-  TDC_H,
-  TDC_I,
-  TDC_J,
-  TDC_K,
-  TDC_L,
-  TDC_M,
-  TDC_N,
-  TDC_O,
-  TDC_P,
-  TDC_Q,
-  TDC_R,
-  TDC_S,
-  TDC_T,
-  TDC_U,
-  TDC_V,
-  TDC_W,
-  TDC_X,
-  TDC_Y,
-  TDC_Z
+  KC_ESC_TAB = SAFE_RANGE, // H:esc T:tab
+  KC_CP_PST, // H:copy T:paste
+ 
 };
 
-// Aliases for readability
-
-#define SYM MO(_SYM)
-#define NAV MO(_NAV)
-#define FKEYS MO(_FUNCTION)
-#define ADJUST MO(_ADJUST)
-
-#define CTL_BSP MT(MOD_LCTL, KC_BSPC)
-#define CTL_QUOT MT(MOD_RCTL, KC_QUOTE)
-
-// Note: LAlt/Enter (ALT_ENT) is not the same thing as the keyboard shortcut Alt+Enter.
-// The notation `mod/tap` denotes a key that activates the modifier `mod` when held down, and
-// produces the key `tap` when tapped (i.e. pressed and released).
-
 // clang-format off
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/*
- * Base Layer: COLMAK
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |Tab/Esc |   Q  |   W  |   F  |   P  |   B  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Bsp|   A  |   R  |   S  |   T  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   D  |   V  | [ {  |CapsLk|  |F-keys|  ] } |   N  |   M  | ,  < | . >  | /  ? | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |Adjust| LGUI | LAlt/| Space| Nav  |  | Sym  | Space| AltGr| RGUI | Menu |
- *                        |      |      | Enter|      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+/* Layer 0:
+ * ┌──────────┬─────┬─────┬─────┬─────┬─────┐                                    ┌─────┬─────┬─────┬─────┬─────┬─────┐
+ * │TD_TAB_ESC│  Q  │  W  │  F  │  P  │  B  │                                    │  J  │  L  │  U  │  Y  │  ;  │  \  │
+ * ├──────────┼─────┼─────┼─────┼─────┼─────┤                                    ├─────┼─────┼─────┼─────┼─────┼─────┤
+ * │    ⌫     │  A  │  R  │  S  │  T  │  G  │                                    │  M  │  N  │  E  │  I  │  O  │  '  │
+ * ├──────────┼─────┼─────┼─────┼─────┼─────┼─────────────┬─────────┬─────┬──────┼─────┼─────┼─────┼─────┼─────┼─────┤
+ * │    `     │  Z  │  X  │  C  │  D  │  V  │            │TD_CP_PST│    │     │  K  │  H  │  ,  │  .  │  /  │    │
+ * └──────────┴─────┴─────┼─────┼─────┼─────┼─────────────┼─────────┼─────┼──────┼─────┼─────┼─────┼─────┴─────┴─────┘
+ *                        │ Alt │Ctrl │  ␣  │OSM(MOD_LSFT)│        │    │OSL(1)│  ⏎  │  ↑  │  ↓  │
+ *                        └─────┴─────┴─────┴─────────────┴─────────┴─────┴──────┴─────┴─────┴─────┘
  */
-    [_BASE] = LAYOUT(
-     TD_TAB_ESC ,TDC_Q ,  TDC_W   ,  TDC_F  ,   TDC_P ,   TDC_B , TDC_J   , TDC_L   ,  TDC_U  ,   TDC_Y ,KC_SCLN, KC_BSPC,
-     CTL_BSP , TDC_A ,  TDC_R   ,  TDC_S  ,   TDC_T ,   TDC_G ,                                     TDC_M   , TDC_N   ,  TDC_E  ,   TDC_I , TDC_O  , CTL_QUOT,
-     KC_LSFT , TDC_Z ,  TDC_X   ,  TDC_C  ,   TDC_D ,   TDC_V , _______, TD_CP_PST, _______, _______, TDC_K   , TDC_H   , KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
-                                _______, _______, KC_SPC , _______, _______, _______, _______, _______, KC_UP  , KC_DOWN
-    ), 
-    /*
- * Base Layer: QWERTY
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |  Tab   |   Q  |   W  |   E  |   R  |   T  |                              |   Y  |   U  |   I  |   O  |   P  |  Bksp  |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |Ctrl/Esc|   A  |   S  |   D  |   F  |   G  |                              |   H  |   J  |   K  |   L  | ;  : |Ctrl/' "|
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * | LShift |   Z  |   X  |   C  |   V  |   B  | [ {  |CapsLk|  |F-keys|  ] } |   N  |   M  | ,  < | . >  | /  ? | RShift |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |Adjust| LGUI | LAlt/| Space| Nav  |  | Sym  | Space| AltGr| RGUI | Menu |
- *                        |      |      | Enter|      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+  [0] = LAYOUT(
+    KC_ESC_TAB,KC_Q ,KC_W , KC_F  , KC_P  , KC_B ,                                      KC_J ,KC_L , KC_U  , KC_Y ,KC_SCLN,KC_BSLS,
+     KC_BSPC  ,KC_A ,KC_R , KC_S  , KC_T  , KC_G ,                                      KC_M ,KC_N , KC_E  , KC_I , KC_O  ,KC_QUOT,
+      KC_GRV  ,KC_Z ,KC_X , KC_C  , KC_D  , KC_V ,    EEPROM_RESET    ,KC_CP_PST,KC_NO,KC_NO , KC_K ,KC_H ,KC_COMM,KC_DOT,KC_SLSH, KC_NO ,
+                           KC_LALT,KC_LCTL,KC_SPC,OSM(MOD_LSFT),  KC_NO  ,KC_NO,OSL(1),KC_ENT,KC_UP,KC_DOWN
+  ),
+
+/* Layer 1:
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┐                       ┌─────┬─────┬─────┬─────┬─────┬─────┐
+ * │     │  !  │  @  │  #  │  $  │  %  │                       │  ^  │  [  │  ]  │    │    │    │
+ * ├─────┼─────┼─────┼─────┼─────┼─────┤                       ├─────┼─────┼─────┼─────┼─────┼─────┤
+ * │     │  *  │  &  │  +  │  =  │  >  │                       │    │  {  │  }  │    │    │    │
+ * ├─────┼─────┼─────┼─────┼─────┼─────┼─────┬─────┬─────┬─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+ * │  ~  │  /  │  |  │  -  │  _  │    │    │    │    │    │    │  (  │  )  │  <  │  >  │    │
+ * └─────┴─────┴─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┴─────┴─────┘
+ *                   │    │    │    │    │    │    │     │    │    │    │
+ *                   └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-    // [_BASE] = LAYOUT(
-    //  KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,  KC_VOLD, KC_VOLU,   KC_PGDN, KC_PGUP, KC_J,   KC_L ,  KC_U ,   KC_Y ,  KC_SCLN , KC_BSPC,
-    //  CTL_ESC , KC_A ,  KC_R   ,  KC_S  ,   KC_T ,   KC_G ,                                        KC_M,   KC_N ,  KC_E ,   KC_I , KC_O, CTL_QUOT,
-    //  KC_LSFT , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , KC_LBRC,KC_CAPS,     FKEYS  , KC_RBRC, KC_K,   KC_H ,KC_COMM, KC_DOT ,KC_SLSH, KC_RSFT,
-    //                             ADJUST , KC_LGUI, ALT_ENT, KC_SPC , NAV   ,     SYM    , KC_SPC ,KC_RALT, KC_RGUI, KC_APP
-    // ),
+  [1] = LAYOUT(
+    KC_TRNS,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                          KC_CIRC,KC_LBRC,KC_RBRC,KC_NO,KC_NO,KC_NO,
+    KC_TRNS,KC_ASTR,KC_AMPR,KC_PLUS,KC_EQL , KC_GT ,                           KC_NO ,KC_LCBR,KC_RCBR,KC_NO,KC_NO,KC_NO,
+    KC_TILD,KC_SLSH,KC_PIPE,KC_MINS,KC_UNDS, KC_NO ,KC_NO,KC_NO,KC_NO, KC_NO , KC_NO ,KC_LPRN,KC_RPRN,KC_LT,KC_GT,KC_NO,
+                             KC_NO , KC_NO , KC_NO ,KC_NO,KC_NO,KC_NO,KC_TRNS, KC_NO , KC_NO , KC_NO 
+  ),
 
-
-/*
- * Nav Layer: Media, navigation
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |      |      |      |                              | PgUp | Home |   ↑  | End  | VolUp| Delete |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  GUI |  Alt | Ctrl | Shift|      |                              | PgDn |  ←   |   ↓  |   →  | VolDn| Insert |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |      |      |      |      |ScLck |  |      |      | Pause|M Prev|M Play|M Next|VolMut| PrtSc  |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
+/* Layer 2:
+ * ┌─────┬─────┬─────┬─────┬─────┬─────┐                       ┌─────┬─────┬─────┬─────┬─────┬─────┐
+ * │    │    │    │    │    │    │                       │    │  7  │  8  │  9  │    │    │
+ * ├─────┼─────┼─────┼─────┼─────┼─────┤                       ├─────┼─────┼─────┼─────┼─────┼─────┤
+ * │    │    │    │    │    │    │                       │    │  4  │  5  │  6  │    │    │
+ * ├─────┼─────┼─────┼─────┼─────┼─────┼─────┬─────┬─────┬─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+ * │    │    │    │    │    │    │    │    │    │    │    │  1  │  2  │  3  │    │    │
+ * └─────┴─────┴─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┴─────┴─────┘
+ *                   │    │    │    │    │    │    │    │    │    │    │
+ *                   └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘
  */
-    [_NAV] = LAYOUT(
-      _______, _______, _______, _______, _______,  _______, KC_PGUP, KC_HOME, KC_UP,   KC_END,  KC_VOLU, KC_DEL,
-      _______, KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, _______,                                     KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_INS,
-      _______, _______, _______, _______, _______, _______, _______, KC_SLCK, _______, _______,KC_PAUSE, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
-/*
- * Sym Layer: Numbers and symbols
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |    `   |  1   |  2   |  3   |  4   |  5   |                              |   6  |  7   |  8   |  9   |  0   |   =    |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |    ~   |  !   |  @   |  #   |  $   |  %   |                              |   ^  |  &   |  *   |  (   |  )   |   +    |
- * |--------+------+------+------+------+------+-------------.  ,------+-------------+------+------+------+------+--------|
- * |    |   |   \  |  :   |  ;   |  -   | \ |  | [ {  |      |  |      |  ] } |  # ~ |  _   |  ,   |  .   |  /   |   ?    |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_SYM] = LAYOUT(
-      KC_GRV ,   KC_1 ,   KC_2 ,   KC_3 ,   KC_4 ,   KC_5 , KC_6 ,   KC_7 ,   KC_8 ,   KC_9 ,   KC_0 , KC_EQL ,
-     KC_TILD , KC_EXLM,  KC_AT , KC_HASH,  KC_DLR, KC_PERC,                                     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PLUS,
-     KC_PIPE , KC_BSLS, KC_COLN, KC_SCLN, KC_MINS, KC_NUBS, KC_LBRC, _______, _______, KC_RBRC, KC_NUHS, KC_UNDS, KC_COMM,  KC_DOT, KC_SLSH, KC_QUES,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
-/*
- * Function Layer: Function keys
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |  F9  | F10  | F11  | F12  |      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |  F5  |  F6  |  F7  |  F8  |      |                              |      | Shift| Ctrl |  Alt |  GUI |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |  F1  |  F2  |  F3  |  F4  |      |      |      |  |      |      |      |      |      |      |      |        |
- * `--------+------+------+--------------------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_FUNCTION] = LAYOUT(
-      _______,  KC_F9 ,  KC_F10,  KC_F11,  KC_F12, _______, _______, _______, _______, _______, _______, _______,
-      _______,  KC_F5 ,  KC_F6 ,  KC_F7 ,  KC_F8 , _______,                                     _______, KC_RSFT, KC_RCTL, KC_LALT, KC_RGUI, _______,
-      _______,  KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
-/*
- * Adjust Layer: Default layer settings, RGB
- *
- * ,-------------------------------------------.                              ,-------------------------------------------.
- * |        |      |      |QWERTY|      |      |                              |      |      |      |      |      |        |
- * |--------+------+------+------+------+------|                              |------+------+------+------+------+--------|
- * |        |      |      |Dvorak|      |      |                              | TOG  | SAI  | HUI  | VAI  | MOD  |        |
- * |--------+------+------+------+------+------+-------------.  ,-------------+------+------+------+------+------+--------|
- * |        |      |      |Colmak|      |      |      |      |  |      |      |      | SAD  | HUD  | VAD  | RMOD |        |
- * `----------------------+------+------+------+------+------|  |------+------+------+------+------+----------------------'
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        |      |      |      |      |      |  |      |      |      |      |      |
- *                        `----------------------------------'  `----------------------------------'
- */
-    [_ADJUST] = LAYOUT(
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,
-      _______, _______, _______, _______, _______, _______,                                     RGB_TOG, RGB_SAI, RGB_HUI, RGB_VAI,  RGB_MOD, _______,
-      _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, RGB_SAD, RGB_HUD, RGB_VAD, RGB_RMOD, _______,
-                                 _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-    ),
-
+  [2] = LAYOUT(
+    KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,                        KC_NO,KC_P7,KC_P8,KC_P9,KC_NO,KC_NO,
+    KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,                        KC_NO,KC_P4,KC_P5,KC_P6,KC_NO,KC_NO,
+    KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_P1,KC_P2,KC_P3,KC_NO,KC_NO,
+                      KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO,KC_NO
+  ),
 
 };
 // clang-format on
 
-uint16_t td_tab_esc_timer;
-uint16_t td_cp_pst_timer;
-uint16_t tdc_a_timer;
-uint16_t tdc_b_timer;
-uint16_t tdc_c_timer;
-uint16_t tdc_d_timer;
-uint16_t tdc_e_timer;
-uint16_t tdc_f_timer;
-uint16_t tdc_g_timer;
-uint16_t tdc_h_timer;
-uint16_t tdc_i_timer;
-uint16_t tdc_j_timer;
-uint16_t tdc_k_timer;
-uint16_t tdc_l_timer;
-uint16_t tdc_m_timer;
-uint16_t tdc_n_timer;
-uint16_t tdc_o_timer;
-uint16_t tdc_p_timer;
-uint16_t tdc_q_timer;
-uint16_t tdc_r_timer;
-uint16_t tdc_s_timer;
-uint16_t tdc_t_timer;
-uint16_t tdc_u_timer;
-uint16_t tdc_v_timer;
-uint16_t tdc_w_timer;
-uint16_t tdc_x_timer;
-uint16_t tdc_y_timer;
-uint16_t tdc_z_timer;
+uint16_t kc_esc_tab_timer;
+uint16_t kc_cp_pst_timer;
+
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record)
 {
   switch (keycode)
   {
 
-  case TD_TAB_ESC: // One key copy/paste
+  case KC_ESC_TAB: // H:esc T:tab
     if (record->event.pressed)
     {
-      td_tab_esc_timer = timer_read();
+      kc_esc_tab_timer = timer_read();
     }
     else
     {
-      if (timer_elapsed(td_tab_esc_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_V));
-      }
-      else
-      { // Tap, paste
-        tap_code16(C(KC_V));
-      }
-    }
-    break;
-
-  case TD_CP_PST: // One key copy/paste
-    if (record->event.pressed)
-    {
-      td_cp_pst_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(td_cp_pst_timer) > TAPPING_TERM)
-      { // Hold, copy
+      if (timer_elapsed(kc_esc_tab_timer) > TAPPING_TERM)
+       { 
         tap_code16(KC_ESC);
       }
       else
-      { // Tap, paste
+      { 
         tap_code16(KC_TAB);
       }
+   
     }
     break;
 
-  case TDC_A: // One key copy/paste
+  case KC_CP_PST: // H:copy T:paste
     if (record->event.pressed)
     {
-      tdc_a_timer = timer_read();
+      kc_cp_pst_timer = timer_read();
     }
     else
     {
-      if (timer_elapsed(tdc_a_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_A));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_A);
-      }
-    }
-    break;
-
-  case TDC_B: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_b_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_b_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_B));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_B);
-      }
-    }
-    break;
-
-  case TDC_C: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_c_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_c_timer) > TAPPING_TERM)
-      { // Hold, copy
+      if (timer_elapsed(kc_cp_pst_timer) > TAPPING_TERM)
+        { 
         tap_code16(C(KC_C));
       }
       else
-      { // Tap, paste
-        tap_code16(KC_C);
-      }
-    }
-    break;
-
-  case TDC_D: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_d_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_d_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_D));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_D);
-      }
-    }
-    break;
-
-  case TDC_E: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_e_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_e_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_E));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_E);
-      }
-    }
-    break;
-
-  case TDC_F: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_f_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_f_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_F));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_F);
-      }
-    }
-    break;
-
-  case TDC_G: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_g_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_g_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_G));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_G);
-      }
-    }
-    break;
-
-  case TDC_H: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_h_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_h_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_H));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_H);
-      }
-    }
-    break;
-
-  case TDC_I: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_i_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_i_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_I));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_I);
-      }
-    }
-    break;
-
-  case TDC_J: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_j_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_j_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_J));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_J);
-      }
-    }
-    break;
-
-  case TDC_K: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_k_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_k_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_K));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_K);
-      }
-    }
-    break;
-
-  case TDC_L: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_l_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_l_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_L));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_L);
-      }
-    }
-    break;
-
-  case TDC_M: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_m_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_m_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_M));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_M);
-      }
-    }
-    break;
-
-  case TDC_N: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_n_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_n_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_N));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_N);
-      }
-    }
-    break;
-
-  case TDC_O: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_o_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_o_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_O));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_O);
-      }
-    }
-    break;
-
-  case TDC_P: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_p_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_p_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_P));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_P);
-      }
-    }
-    break;
-
-  case TDC_Q: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_q_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_q_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_Q));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_Q);
-      }
-    }
-    break;
-
-  case TDC_R: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_r_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_r_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_R));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_R);
-      }
-    }
-    break;
-
-  case TDC_S: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_s_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_s_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_S));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_S);
-      }
-    }
-    break;
-
-  case TDC_T: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_t_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_t_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_T));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_T);
-      }
-    }
-    break;
-
-  case TDC_U: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_u_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_u_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_U));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_U);
-      }
-    }
-    break;
-
-  case TDC_V: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_v_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_v_timer) > TAPPING_TERM)
-      { // Hold, copy
+      { 
         tap_code16(C(KC_V));
       }
-      else
-      { // Tap, paste
-        tap_code16(KC_V);
-      }
     }
     break;
 
-  case TDC_W: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_w_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_w_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_W));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_W);
-      }
-    }
-    break;
 
-  case TDC_X: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_x_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_x_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_X));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_X);
-      }
-    }
-    break;
-
-  case TDC_Y: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_y_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_y_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_Y));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_Y);
-      }
-    }
-    break;
-
-  case TDC_Z: // One key copy/paste
-    if (record->event.pressed)
-    {
-      tdc_z_timer = timer_read();
-    }
-    else
-    {
-      if (timer_elapsed(tdc_z_timer) > TAPPING_TERM)
-      { // Hold, copy
-        tap_code16(C(KC_Z));
-      }
-      else
-      { // Tap, paste
-        tap_code16(KC_Z);
-      }
-    }
-    break;
   }
   return true;
 }
+
+void keyboard_post_init_user(void) {
+  rgblight_enable_noeeprom(); // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(HSV_YELLOW);
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+rgblight_set_effect_range(0, 20);
+rgblight_set_clipping_range(0,20);
+  sethsv(HSV_BLUE, (LED_TYPE *)&led[0]); // led 0
+sethsv(HSV_RED,   (LED_TYPE *)&led[1]); // led 1
+sethsv(HSV_GREEN, (LED_TYPE *)&led[2]); // led 2
+
+  sethsv(HSV_BLUE, (LED_TYPE *)&led[6]); // led 0
+sethsv(HSV_RED,   (LED_TYPE *)&led[7]); // led 1
+sethsv(HSV_GREEN, (LED_TYPE *)&led[8]); // led 2
+rgblight_set(); 
+}
+// // Light LEDs 6 to 9 and 12 to 15 red when caps lock is active. Hard to ignore!
+// const rgblight_segment_t PROGMEM layer0[] = RGBLIGHT_LAYER_SEGMENTS(
+//     {1, 26, HSV_OFF}
+// );
+// // Light LEDs 6 to 9 and 12 to 15 red when caps lock is active. Hard to ignore!
+// const rgblight_segment_t PROGMEM layer1[] = RGBLIGHT_LAYER_SEGMENTS(
+//   //   {1,1,HSV_AZURE},
+//   // {2,1,HSV_BLACK},
+//   // {3,1,HSV_BLUE},
+//   // {4,1,HSV_CHARTREUSE},
+//   // {5,1,HSV_CORAL},
+//   // {6,1,HSV_CYAN},
+//   // {7,1,HSV_GOLD},
+//   // {8,1,HSV_GOLDENROD},
+//   // {9,1,HSV_GREEN},
+//   // {10,1,HSV_MAGENTA},
+//   // {11,1,HSV_ORANGE},
+//   // {12,1,HSV_PINK},
+//   // {13,1,HSV_PURPLE},
+//   // {14,1,HSV_RED},
+//   // {15,1,HSV_SPRINGGREEN},
+//   // {16,1,HSV_TEAL},
+//   // {17,1,HSV_TURQUOISE},
+//   // {18,1,HSV_WHITE},
+//   // {19,1,HSV_YELLOW}
+//   {0,7,HSV_YELLOW},
+//   {7,1,HSV_WHITE},
+//     {8,1,HSV_RED},
+//   {9,1,HSV_BLUE},
+//   {10,1,HSV_GREEN}
+//   // {4,1,HSV_RED},
+//   // {5,1,HSV_BLUE},
+//   // {6,1,HSV_GREEN},
+//   // {7,1,HSV_GREEN},
+//   // {8,1,HSV_BLUE},
+//   // {9,1,HSV_GREEN},
+//   // {10,1,HSV_MAGENTA},
+//   // {11,1,HSV_MAGENTA},
+//   // {12,1,HSV_MAGENTA},
+//   // {13,1,HSV_PURPLE},
+//   // {14,1,HSV_PURPLE},
+//   // {15,1,HSV_PURPLE},
+//   // {16,1,HSV_PURPLE},
+//   // {17,1,HSV_YELLOW},
+//   // {18,1,HSV_YELLOW},
+//   // {19,1,HSV_YELLOW}
+// );
+
+// Now define the array of layers. Later layers take precedence
+// const rgblight_segment_t* const PROGMEM my_rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+//     layer0,layer1
+//     // my_layer1_layer,    // Overrides caps lock layer
+//     // my_layer2_layer,    // Overrides other layers
+//     // my_layer3_layer     // Overrides other layers
+// );
+
+// void keyboard_post_init_user(void) {
+//     // Enable the LED layers
+//     // rgblight_layers = my_rgb_layers;
+// }
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    // rgblight_set_layer_state(0, layer_state_cmp(state, 0));
+    return state;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    // rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+    // rgblight_set_layer_state(3, layer_state_cmp(state, _ADJUST));
+    return state;
+}
+#ifdef OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+	return OLED_ROTATION_180;
+}
+
+
+// static void render_status(void) {
+    // QMK Logo and version information
+    
+    //oled_write_P(PSTR("┌ j l u y i o \n"),false);
+    // static const char PROGMEM kyria_logo[] = {
+    // 0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+    // 0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+    // 0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,
+    // 0x01,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0b,0x0b,0x0c,0x0d,0x0e,0x0f,0x10,0x11,0x12,0x13,0x14,
+    // 0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2a,0x2b,0x2c,0x2d,0x2e,0x2f,0x20,0x21,0x22,0x23,0x24,
+    // 0x40,0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x4a,0x4b,0x4c,0x4d,0x4e,0x4f,0x50,0x51,0x52,0x53,0x54,
+    // 0x60,0x61,0x62,0x63,0x64,0x65,0x66,0x67,0x68,0x69,0x6a,0x6b,0x6c,0x6d,
+
+//  0x78,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
+//     0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
+//     0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0
+
+
+    // };
+  //  oled_write_P(kyria_logo, false);
+// oled_write_P(PSTR("│  J  │  L  │  U  │  Y  │  ;  │  █  │\n"),false);
+// oled_write_P(PSTR("├─────┼─────┼─────┼─────┼─────┼─────┤\n"),false);
+// oled_write_P(PSTR("│  M  │  N  │  E  │  I  │  O  │  █  │\n"),false);
+// oled_write_P(PSTR("┼─────┼─────┼─────┼─────┼─────┼─────┤\n"),false);
+// oled_write_P(PSTR("│  K  │  H  │  ,  │  .  │  /  │  █  │\n"),false);
+// oled_write_P(PSTR("┼─────┼─────┼─────┼─────┴─────┴─────┘\n"), false);
+
+    // Host Keyboard Layer Status
+    // oled_write_P(PSTR("Layer: "), false);
+  
+    
+
+    // Host Keyboard LED Status
+    // uint8_t led_usb_state = host_keyboard_leds();
+    // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_NUM_LOCK)    ? PSTR("NUMLCK ") : PSTR("       "), false);
+    // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_CAPS_LOCK)   ? PSTR("CAPLCK ") : PSTR("       "), false);
+    // oled_write_P(IS_LED_ON(led_usb_state, USB_LED_SCROLL_LOCK) ? PSTR("SCRLCK ") : PSTR("       "), false);
+// }
+
+// void oled_task_user(void) {
+ 
+//         render_status(); // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+  
+// }
+#endif
