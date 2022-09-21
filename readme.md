@@ -49,3 +49,10 @@ node ../keyboard-converter/dist/bin/index.js \
 --qct ./linked/keyboards/splitkb/kyria/keymaps/buckwich/keymap.template.c \
 --o ./linked/keyboards/splitkb/kyria/keymaps/buckwich/keymap.c
 ``` 
+
+Tip for WSL
+
+copy to windows with random addon
+
+ qmk compile -kb handwired/numpad -km default
+cp ./qmk_firmware/.build/handwired_numpad_default.hex /mnt/c/Users/sstei/Documents/
