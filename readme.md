@@ -26,9 +26,9 @@ qmk config user.keymap=buckwich
 ## My Boards
 
 `qmk compile -kb splitkb/kyria -km buckwich`
-`qmk compile -kb handwired/kb`
 `qmk compile -kb handwired/knob`
-`qmk compile -kb handwired/numpad2`
+`qmk compile -kb handwired/numpad`
+`qmk compile -kb handwired/modular`
 
 ## Usage
 
