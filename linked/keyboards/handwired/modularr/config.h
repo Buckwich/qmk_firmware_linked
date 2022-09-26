@@ -7,10 +7,10 @@
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID    0xFEED
-#define PRODUCT_ID   0x0000
+#define PRODUCT_ID   0x0002
 #define DEVICE_VER   0x0001
 #define MANUFACTURER Buckwich
-#define PRODUCT      modular
+#define PRODUCT      superright
 
 /* key matrix size */
 #define MATRIX_ROWS 6
