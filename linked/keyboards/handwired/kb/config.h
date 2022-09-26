@@ -13,13 +13,11 @@
 
 /* key matrix size */
 #define MATRIX_ROWS 6
-#define MATRIX_COLS 7
+#define MATRIX_COLS 6
 
 /* key matrix pins */
-//                        A2, A1, A0, 15, 14, 16, 10
-#define MATRIX_COL_PINS { F5, F6, F7, B1, B3, B2, B6 }
-//                         4   5   6   7   8   9
-#define MATRIX_ROW_PINS { D4, C6, D7, E6, B4, B5 }
+#define MATRIX_ROW_PINS { F6, F7, B2, B6, B3, B1 }
+#define MATRIX_COL_PINS { B5, B4, E6, D7, F4, F5 }
 #define UNUSED_PINS
 
 /* COL2ROW or ROW2COL */

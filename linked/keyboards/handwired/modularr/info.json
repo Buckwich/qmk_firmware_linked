@@ -1,5 +1,5 @@
 {
-    "keyboard_name": "modular",
+    "keyboard_name": "modularr",
     "url": "",
     "maintainer": "Buckwich",
     "layouts": {
@@ -8,6 +8,7 @@
                 {"label": "k00", "x": 0, "y": 0},
                 {"label": "k01", "x": 1, "y": 0},
                 {"label": "k02", "x": 2, "y": 0},
+                {"label": "k03", "x": 3, "y": 0},
                 {"label": "k04", "x": 4, "y": 0},
                 {"label": "k05", "x": 5, "y": 0},
 
@@ -44,7 +45,7 @@
                 {"label": "k52", "x": 2, "y": 5},
                 {"label": "k53", "x": 3, "y": 5},
                 {"label": "k54", "x": 4, "y": 5},
-                {"label": "k55", "x": 5, "y": 5},
+                {"label": "k55", "x": 5, "y": 5}
 
             ]
         }
