@@ -14,8 +14,7 @@
         "console": false,
         "extrakey": true,
         "mousekey": true,
-        "nkro": false,
-        "rgblight": true
+        "nkro": false
     },
     "matrix_pins": {
         "cols": [
@@ -35,15 +34,7 @@
             "B14"
         ]
     },
-    "mouse_key": {
-        "enabled": true
-    },
     "processor": "STM32F401",
-    "rgblight": {
-        "led_count": 36,
-        "max_brightness": 100,
-        "pin": "A7"
-    },
     "usb": {
         "device_version": "0.0.1",
         "pid": "0x6060",
