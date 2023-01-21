@@ -11,7 +11,7 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
-        RGB_TOG ,KC_F6 ,KC_F10 , KC_F11, KC_NO, RESET,
+        RGB_TOG ,KC_F6 ,KC_F10 , KC_F11, KC_NO, QK_BOOT,
         KC_6  ,KC_7  ,KC_8   , KC_9, KC_0  , KC_6,
         KC_J  ,KC_L  ,KC_U   , KC_Y, KC_SCLN  , KC_BSLS,
         KC_M  ,KC_N  ,KC_E   , KC_I, KC_O  , KC_QUOT,

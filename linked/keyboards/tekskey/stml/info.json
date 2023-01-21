@@ -3,6 +3,7 @@
     "keyboard_name": "tekskey",
     "maintainer": "buckwich",
     "bootloader": "stm32-dfu",
+    "board": "BLACKPILL_STM32_F401",
     "debounce": 5,
     "diode_direction": "ROW2COL",
     "features": {
@@ -44,14 +45,12 @@
         "pin": "A7"
     },
     "usb": {
-        "device_ver": "0x0001",
+        "device_version": "0.0.1",
         "pid": "0x6060",
         "vid": "0xFEED"
     },
     "layouts": {
         "LAYOUT": {
-            "c_macro": true,
-            "filename": "keyboards/tekskey/stml/stml.h",
             "layout": [
                 {
                     "label": "k00",
