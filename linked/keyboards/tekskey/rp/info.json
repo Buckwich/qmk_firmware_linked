@@ -1,9 +1,10 @@
 {
     "manufacturer": "buckwich",
-    "keyboard_name": "tekskey",
+    "keyboard_name": "tekskey rp",
     "maintainer": "buckwich",
-    "bootloader": "stm32-dfu",
-    "board": "BLACKPILL_STM32_F401",
+    "bootloader": "rp2040",
+    "processor": "RP2040",
+    "board": "GENERIC_RP_RP2040",
     "debounce": 5,
     "diode_direction": "ROW2COL",
     "features": {
@@ -16,10 +17,9 @@
         "mousekey": true,
         "nkro": true
     },
-    "processor": "STM32F401",
     "usb": {
         "device_version": "0.0.1",
-        "pid": "0x6060",
+        "pid": "0x6061",
         "vid": "0xFEEE"
     }
 }

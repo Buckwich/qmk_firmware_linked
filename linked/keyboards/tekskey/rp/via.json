@@ -1,6 +1,6 @@
 {
     "name": "Tekskey",
-    "productId": "0x6060",
+    "productId": "0x6061",
     "vendorId": "0xfeee",
     "menus": [
         "qmk_rgb_matrix"
