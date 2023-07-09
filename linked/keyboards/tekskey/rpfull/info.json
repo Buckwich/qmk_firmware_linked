@@ -1,6 +1,6 @@
 {
     "manufacturer": "buckwich",
-    "keyboard_name": "tekskey rp",
+    "keyboard_name": "tekskey rpfull",
     "maintainer": "buckwich",
     "bootloader": "rp2040",
     "processor": "RP2040",
@@ -19,7 +19,7 @@
     },
     "usb": {
         "device_version": "0.0.1",
-        "pid": "0x6061",
+        "pid": "0x6062",
         "vid": "0xFEEE"
     }
 }

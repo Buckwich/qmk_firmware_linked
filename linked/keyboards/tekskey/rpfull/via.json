@@ -1,6 +1,6 @@
 {
-    "name": "Tekskey",
-    "productId": "0x6061",
+    "name": "Tekskey RP Full",
+    "productId": "0x6062",
     "vendorId": "0xfeee",
     "matrix": {
         "rows": 12,

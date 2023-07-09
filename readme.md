@@ -73,3 +73,16 @@ copy to windows with random addon
 qmk compile -kb handwired/numpad -km default
 
 cp ./qmk_firmware/.build/handwired_numpad_default.hex /mnt/c/Users/sstei/Documents/
+
+## My common builds
+
+```
+qmk compile -kb tekskey/rpfull -km via # compile
+qmk flash -kb tekskey/rpfull -km via # compile & flash
+
+qmk via2json -kb tekskey/rpfull linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.via-keymap.json > linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.qmk-keymap.json # via to qmk json
+qmk json2c linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.qmk-keymap.json
+```
+
+chrome://device-log/
+sudo chmod 777 /dev/hidrawXXX
