@@ -4,10 +4,10 @@ This repo seperates the offical qmk_firmware repo from my customizations to it b
 
 ## Prerequisites
 
-* QMK CLI (`python3 -m pip install qmk`) installed and setup (`qmk doctor`)
-* stow (`sudo apt install stow`)
+- QMK CLI (`python3 -m pip install qmk`) installed and setup (`qmk doctor`)
+- stow (`sudo apt install stow`)
 
-## Repo Setup 
+## Repo Setup
 
 ```bash
 # Init
@@ -32,34 +32,44 @@ qmk config user.keymap=buckwich
 
 ## Usage
 
-* Update qmk_firmware
+- Update qmk_firmware
+
 ```
 git submodule update --init --recursive
 ```
-* Link files (You can then use qmk as you normally would)
-``` 
+
+- Link files (You can then use qmk as you normally would)
+
+```
 stow --target=qmk_firmware linked
 ```
-* Unlink files
+
+- Unlink files
+
 ```
-stow --delete --target=qmk_firmware linked 
+stow --delete --target=qmk_firmware linked
 ```
-* c to json
+
+- c to json
+
 ```
 qmk c2json linked/keyboards/splitkb/kyria/keymaps/buckwich/keymap.c -km buckwich -kb splitkb/kyria -o buckwich.json
 ```
-* json to custom c
-``` 
+
+- json to custom c
+
+```
 node ../keyboard-converter/dist/bin/index.js \
 --kbf ./linked/keyboards/splitkb/kyria/keymaps/buckwich/info.matrix.json \
 --kmf ./linked/keyboards/splitkb/kyria/keymaps/buckwich/buckwich.json \
 --qct ./linked/keyboards/splitkb/kyria/keymaps/buckwich/keymap.template.c \
 --o ./linked/keyboards/splitkb/kyria/keymaps/buckwich/keymap.c
-``` 
+```
 
 Tip for WSL
 
 copy to windows with random addon
 
- qmk compile -kb handwired/numpad -km default
+qmk compile -kb handwired/numpad -km default
+
 cp ./qmk_firmware/.build/handwired_numpad_default.hex /mnt/c/Users/sstei/Documents/

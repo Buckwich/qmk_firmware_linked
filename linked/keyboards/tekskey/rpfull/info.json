@@ -1,0 +1,25 @@
+{
+    "manufacturer": "buckwich",
+    "keyboard_name": "tekskey rp",
+    "maintainer": "buckwich",
+    "bootloader": "rp2040",
+    "processor": "RP2040",
+    "board": "GENERIC_RP_RP2040",
+    "debounce": 5,
+    "diode_direction": "ROW2COL",
+    "features": {
+        "audio": false,
+        "backlight": false,
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true
+    },
+    "usb": {
+        "device_version": "0.0.1",
+        "pid": "0x6061",
+        "vid": "0xFEEE"
+    }
+}
