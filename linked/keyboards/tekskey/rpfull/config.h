@@ -30,5 +30,3 @@
 
 // #define DEBUG_MATRIX_SCAN_RATE
 #define DEBOUNCE 5
-
-this is a  te st of the debounce 5 code does it work?
