@@ -26,7 +26,3 @@
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 
-
-
-// #define DEBUG_MATRIX_SCAN_RATE
-#define DEBOUNCE 5
