@@ -1,0 +1,201 @@
+{
+    "manufacturer": "Buckwich",
+    "keyboard_name": "Tekskey RP v2 Center",
+    "maintainer": "Buckwich",
+    "bootloader": "rp2040",
+    "features": {
+        "bootmagic": true,
+        "command": true,
+        "console": false,
+        "extrakey": true,
+        "mousekey": false,
+        "nkro": true,
+        "encoder": true
+    },
+    "matrix_pins": {
+        "direct": [
+            [
+                "GP3",
+                null,
+                "GP28"
+            ],
+            [
+                "GP6",
+                "GP12",
+                "GP26"
+            ],
+            [
+                "GP7",
+                "GP11",
+                "GP15"
+            ],
+            [
+                null,
+                "GP10",
+                null
+            ],
+            [
+                "GP8",
+                "GP9",
+                "GP14"
+            ]
+        ]
+    },
+    "encoder": {
+        "rotary": [
+            {
+                "pin_a": "GP5",
+                "pin_b": "GP4",
+                "resolution": 4
+            },
+            {
+                "pin_a": "GP27",
+                "pin_b": "GP29",
+                "resolution": 4
+            }
+        ]
+    },
+    "processor": "RP2040",
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "vid": "0xBC1C",
+        "pid": "0x1EE3"
+    },
+    "layouts": {
+        "LAYOUT_ortho_4x4": {
+            "layout": [
+                {
+                    "matrix": [
+                        0,
+                        0
+                    ],
+                    "x": 0,
+                    "y": 0,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        0,
+                        1
+                    ],
+                    "x": 1,
+                    "y": 0,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        0,
+                        2
+                    ],
+                    "x": 2,
+                    "y": 0,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        1,
+                        0
+                    ],
+                    "x": 0,
+                    "y": 1.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        1,
+                        1
+                    ],
+                    "x": 1,
+                    "y": 1.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        1,
+                        2
+                    ],
+                    "x": 2,
+                    "y": 1.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        2,
+                        0
+                    ],
+                    "x": 0,
+                    "y": 2.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        2,
+                        1
+                    ],
+                    "x": 1,
+                    "y": 2.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        2,
+                        2
+                    ],
+                    "x": 2,
+                    "y": 2.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        3,
+                        1
+                    ],
+                    "x": 1,
+                    "y": 3.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        4,
+                        0
+                    ],
+                    "x": 0,
+                    "y": 4.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        4,
+                        1
+                    ],
+                    "x": 1,
+                    "y": 4.5,
+                    "w": 1,
+                    "h": 1
+                },
+                {
+                    "matrix": [
+                        4,
+                        2
+                    ],
+                    "x": 2,
+                    "y": 4.5,
+                    "w": 1,
+                    "h": 1
+                }
+            ]
+        }
+    }
+}
