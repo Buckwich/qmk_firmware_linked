@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Buckwich",
+  "keyboard_name": "tekskey RP v3",
+  "maintainer": "Buckwich",
+  "bootloader": "rp2040",
+  "diode_direction": "COL2ROW",
+  "features": {
+    "bootmagic": true,
+    "command": true,
+    "console": false,
+    "extrakey": true,
+    "mousekey": false,
+    "nkro": true,
+    "encoder": false
+  },
+  "matrix_pins": {
+    "cols": [
+      "GP15", //1
+      "GP26", //2
+      "GP12", //3
+      "GP9", //4
+      "GP5", //5
+      "GP6" //6
+    ],
+    "rows": [
+      "GP14", //1
+      "GP11", //2
+      "GP28", //3
+      "GP13", //4
+      "GP8", //5
+      "GP10" //6
+    ]
+  },
+  "processor": "RP2040",
+  "url": "",
+  "usb": {
+    "device_version": "3.0.0",
+    "vid": "0xBC1C",
+    "pid": "0x1EE3"
+  }
+}
