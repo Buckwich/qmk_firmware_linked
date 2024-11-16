@@ -16,6 +16,9 @@ git submodule add https://github.com/qmk/qmk_firmware.git
 # Update
 git submodule update --init --recursive
 
+# for specific tag
+# select tag and commit before updating other submodules
+
 # Setup qmk home
 # May require manual configuration in qmk.ini
 qmk config user.qmk_home=$(pwd)/qmk_firmware
@@ -79,6 +82,9 @@ cp ./qmk_firmware/.build/handwired_numpad_default.hex /mnt/c/Users/sstei/Documen
 ```
 qmk compile -kb tekskey/rpfull -km via # compile
 qmk flash -kb tekskey/rpfull -km via # compile & flash
+
+qmk compile -kb tekskey/rp3 -km default
+qmk flash -kb tekskey/rp3 -km default
 
 qmk via2json -kb tekskey/rpfull linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.via-keymap.json > linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.qmk-keymap.json # via to qmk json
 qmk json2c linked/keyboards/tekskey/rpfull/keymaps/via/tekskey.qmk-keymap.json
