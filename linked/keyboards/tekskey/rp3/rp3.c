@@ -48,17 +48,4 @@
   4,4,4,4,4,4,     
   4,4,4,4,4,4
 }
-};----``````````````````````11111111111111111111111111111111                            QMK_KEYBOARD_Hquad_60_RGB_MATRIX_LED_LAYOUT_default_led_map_config
-
-
-
-    { 3, 4 },         // LED Index to Flag    tsrneitsrstsntsentnserinineineintsrnteintnesrineneinie
-
-mmlmmkkmm666mmm66llmm66mmmmmmjmmmmmmmmmmmmmjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj66jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-
-
-
-
-jjjjjjj66mmnjjjjj66mjjj
-
-uy;y;;;;;
+};

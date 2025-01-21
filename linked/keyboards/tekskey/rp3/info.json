@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/kcf-hub/qmk-types/refs/heads/jsonschemas/schemas/keyboard_v1.schema.json",
   "manufacturer": "Buckwich",
   "keyboard_name": "tekskey RP v3",
   "maintainer": "Buckwich",
@@ -14,22 +15,8 @@
     "encoder": false
   },
   "matrix_pins": {
-    "cols": [
-      "GP15", //1
-      "GP26", //2
-      "GP12", //3
-      "GP9", //4
-      "GP5", //5
-      "GP6" //6
-    ],
-    "rows": [
-      "GP14", //1
-      "GP11", //2
-      "GP28", //3
-      "GP13", //4
-      "GP8", //5
-      "GP10" //6
-    ]
+    "cols": ["GP15", "GP26", "GP12", "GP9", "GP5", "GP6"],
+    "rows": ["GP14", "GP11", "GP28", "GP13", "GP8", "GP10"]
   },
   "processor": "RP2040",
   "url": "",

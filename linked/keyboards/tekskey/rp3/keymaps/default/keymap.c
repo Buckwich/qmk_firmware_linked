@@ -3,8 +3,6 @@
 
 #include QMK_KEYBOARD_H
 
-
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS
 ][MATRIX_COLS
 ] = {
@@ -40,61 +38,76 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS
 #define _____   {  0,   0,   0}
 
 const uint8_t PROGMEM rgb_matrix_led_map[][RGB_MATRIX_LED_COUNT][4] = {
-   [1]= {
+    [1] = {
     //LEFT
-    RED__,   _____,_____,   _____,_____,
-    _____,_____,MAGEN,TEAL_,PRPLE,_____, //REV
-    _____,_____,_____,_____,_____,_____,
-    _____,_____,_____,_____,_____,_____, //REV
-    _____,_____,_____,_____,_____,_____,
-    _____,_____,_____,_____,_____,_____, //REV
+    _____,_____,   _____,_____,RED__, //REV
+    _____,PRPLE,TEAL_,MAGEN,_____,_____, 
+    _____,_____,_____,_____,_____,_____,//REV
+    _____,_____,_____,_____,_____,_____, 
+    _____,_____,_____,_____,_____,_____,//REV
+    _____,_____,_____,_____,_____,_____, 
 
     //RIGHT
-    _____,_____,   _____,_____,   _____,
-    MAGEN,MAGEN,MAGEN,RED__,_____,_____, //REV
-    _____,_____,TEAL_,TEAL_,TEAL_,MAGEN,
+    _____,_____,   _____,_____,_____, //REV
+    _____,_____,RED__,MAGEN,MAGEN,MAGEN, 
     MAGEN,TEAL_,TEAL_,TEAL_,_____,_____, //REV
-    _____,PRPLE,TEAL_,TEAL_,TEAL_,MAGEN, 
-    MAGEN,TEAL_,TEAL_,PRPLE,PRPLE,PRPLE, //REV
+    _____,_____,TEAL_,TEAL_,TEAL_,MAGEN, 
+    MAGEN,TEAL_,TEAL_,TEAL_,PRPLE,_____, //REV
+    PRPLE,PRPLE,PRPLE,TEAL_,TEAL_,MAGEN,
   }
 };
 
-void set_layer_color(int layer) {
-  for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-    HSV hsv = {
-      .h = pgm_read_byte(&rgb_matrix_led_map[layer][i][0]),
-      .s = pgm_read_byte(&rgb_matrix_led_map[layer][i][1]),
-      .v = pgm_read_byte(&rgb_matrix_led_map[layer][i][2]),
-    };
-    if (!hsv.h && !hsv.s && !hsv.v) {
-        rgb_matrix_set_color( i, 0, 0, 0 );
-    } else {
-        RGB rgb = hsv_to_rgb( hsv );
+void set_layer_color(int layer)
+{
+  for (uint8_t i_row = 0; i_row < MATRIX_ROWS; i_row++)
+  {
+    for (uint8_t i_col = 0; i_col < MATRIX_COLS; i_col++)
+    {
+      if (g_led_config.matrix_co[i_row][i_col] == NO_LED)
+      { // skip as target key doesn't have an led position
+        continue;
+      }
+
+      uint8_t i = g_led_config.matrix_co[i_row][i_col];
+      HSV hsv = {
+          .h = pgm_read_byte(&rgb_matrix_led_map[layer][i][0]),
+          .s = pgm_read_byte(&rgb_matrix_led_map[layer][i][1]),
+          .v = pgm_read_byte(&rgb_matrix_led_map[layer][i][2]),
+      };
+      if (!hsv.h && !hsv.s && !hsv.v)
+      {
+        rgb_matrix_set_color(i, 0, 0, 0);
+      }
+      else
+      {
+        RGB rgb = hsv_to_rgb(hsv);
         float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+        rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
+      }
     }
   }
 }
 
-
-bool rgb_matrix_indicators_user(void) {
-  switch (biton32(layer_state)) {
-    // case 0:
-    //   set_layer_color(0);
-    //   break;
-    case 1:
-      set_layer_color(1);
-      break;	
+bool rgb_matrix_indicators_user(void)
+{
+  switch (biton32(layer_state))
+  {
+  // case 0:
+  //   set_layer_color(0);
+  //   break;
+  case 1:
+    set_layer_color(1);
+    break;
     // case 2:
     //   set_layer_color(2);
     //   break;
     // case 3:
     //   set_layer_color(3);
     //   break;
-   default:
+  default:
     // if (rgb_matrix_get_flags() == LED_FLAG_NONE)
     //   rgb_matrix_set_color_all(0, 0, 0);
     break;
-  } 
+  }
   return false;
 }
